@@ -1,6 +1,8 @@
-document.body.innerHTML = `
-  <h1>Hello world!</h1>
-`;
+import React from "react";
+import { render } from "react-dom";
+import App from "./App";
+
+render(<App />, document.getElementById("app"));
 
 if (module.hot) {
   module.hot.accept();
