@@ -3,6 +3,7 @@
     "env", "react"
   ],
   "plugins": [
-    "transform-object-rest-spread"
+    "transform-object-rest-spread",
+    "inline-react-svg"
   ]
 }
