@@ -1,9 +1,10 @@
-import React from "react";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 import TextField from "../elements/TextField";
 import SearchSvg from "../svg/search.svg";
 import styled from "styled-components";
 
-const Input = TextField.extend`
+const SearchInput = TextField.extend`
   width: 100%;
   height: 64px;
   line-height: 64px;
@@ -21,7 +22,7 @@ const SearchButton = styled.button`
   cursor: pointer;
 `;
 
-const Outter = styled.form`
+const Form = styled.form`
   position: relative;
 
   > ${SearchButton} {
@@ -32,21 +33,62 @@ const Outter = styled.form`
   }
 `;
 
-const SearchBox = ({ style, onRequestSearch, ...rest }) => {
-  const onSubmit = e => {
-    e.preventDefault();
-    if (onRequestSearch)
-      onRequestSearch(e.target.search.value, e.target.search, e);
+class SearchBox extends Component {
+  static propTypes = {
+    onSearch: PropTypes.func.isRequired,
+    size: PropTypes.oneOf(["small", "medium", "large"]).isRequired
   };
 
-  return (
-    <Outter style={style} role="searchbox" onSubmit={onSubmit}>
-      <Input name="search" aria-label="input" {...rest} />
-      <SearchButton aria-label="search">
-        <SearchSvg height="100%" width="100%" />
-      </SearchButton>
-    </Outter>
-  );
-};
+  static defaultProps = {
+    onSearch: () => {},
+    size: "small"
+  };
+
+  state = {
+    searchValue: ""
+  };
+
+  constructor(props) {
+    super(props);
+    this._handleSubmit = this._handleSubmit.bind(this);
+    this._handleInputChange = this._handleInputChange.bind(this);
+  }
+
+  render() {
+    const { size, ...rest } = this.props;
+
+    return (
+      <Form role="searchbox" onSubmit={this._handleSubmit}>
+        <SearchInput
+          name="search"
+          value={this.state.searchValue}
+          aria-label="input"
+          onChange={this._handleInputChange}
+          {...rest}
+        />
+        {size !== "small" ? (
+          <SearchButton aria-label="search">
+            <SearchSvg height="100%" width="100%" />
+          </SearchButton>
+        ) : null}
+      </Form>
+    );
+  }
+
+  _handleInputChange(e) {
+    this.setSearchValue(e.target.searchValue);
+  }
+
+  _handleSubmit(e) {
+    e.preventDefault();
+    this.props.onSearch(this.state.searchValue);
+  }
+
+  setSearchValue(value) {
+    this.setState({
+      searchValue: value
+    });
+  }
+}
 
 export default SearchBox;
