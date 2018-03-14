@@ -4,8 +4,8 @@
   "description": "Open source recipes book",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint src/**",
-    "lint:fix": "eslint --fix src/**",
+    "lint": "eslint src/** test/**",
+    "lint:fix": "eslint --fix src/** test/**",
     "test:watch": "jest --watch",
     "start": "node server.js",
     "start:prod": "NODE_ENV=production node server.js",
@@ -18,7 +18,7 @@
   },
   "lint-staged": {
     "*.js": [
-      "npm run lint:fix",
+      "eslint --fix",
       "git add"
     ]
   },
