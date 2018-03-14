@@ -12,8 +12,8 @@ jobs:
           - v1-deps-
       - run: npm install
       - save_cache:
-        paths:
-          - node_modules
-        key: v1-deps-{{checksum "package.json"}
+          paths:
+            - node_modules
+          key: v1-deps-{{checksum "package.json"}
       - run: npm run lint
       - run: npm test
