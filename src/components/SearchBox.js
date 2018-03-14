@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import TextField from "../elements/TextField";
 import SearchSvg from "../svg/search.svg";
 import styled from "styled-components";
+import { withContentRect } from "react-measure";
 
 const SearchInput = TextField.extend`
   width: 100%;
@@ -33,7 +34,7 @@ const Form = styled.form`
   }
 `;
 
-class SearchBox extends Component {
+export class SearchBox extends Component {
   static propTypes = {
     onSearch: PropTypes.func.isRequired,
     size: PropTypes.oneOf(["small", "medium", "large"]).isRequired
@@ -55,10 +56,15 @@ class SearchBox extends Component {
   }
 
   render() {
-    const { size, ...rest } = this.props;
+    const { innerRef, style, contentRect, ...rest } = this.props;
 
     return (
-      <Form role="searchbox" onSubmit={this._handleSubmit}>
+      <Form
+        role="searchbox"
+        style={style}
+        onSubmit={this._handleSubmit}
+        innerRef={innerRef}
+      >
         <SearchInput
           name="search"
           value={this.state.searchValue}
@@ -66,7 +72,7 @@ class SearchBox extends Component {
           onChange={this._handleInputChange}
           {...rest}
         />
-        {size !== "small" ? (
+        {contentRect && contentRect.client.width > 480 ? (
           <SearchButton aria-label="search">
             <SearchSvg height="100%" width="100%" />
           </SearchButton>
@@ -91,4 +97,6 @@ class SearchBox extends Component {
   }
 }
 
-export default SearchBox;
+export default withContentRect("client")(({ measureRef, ...rest }) => (
+  <SearchBox innerRef={measureRef} {...rest} />
+));
