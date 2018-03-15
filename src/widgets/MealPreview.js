@@ -11,7 +11,7 @@ export const Title = styled.h1``;
 export const Info = styled.h2``;
 export const Button = styled.button``;
 
-export const MealMiniature = ({
+export const MealPreview = ({
   width,
   style,
   innerRef,
@@ -50,7 +50,7 @@ export const MealMiniature = ({
   );
 };
 
-MealMiniature.propTypes = {
+MealPreview.propTypes = {
   width: PropTypes.number,
   style: PropTypes.object,
   innerRef: PropTypes.func,
@@ -61,13 +61,13 @@ MealMiniature.propTypes = {
   onRequestMoreInfo: PropTypes.func.isRequired
 };
 
-MealMiniature.defaultProps = {
+MealPreview.defaultProps = {
   onRequestMoreInfo: () => {}
 };
 
 export default withContentRect("client")(
   ({ contentRect, measureRef, ...rest }) => (
-    <MealMiniature
+    <MealPreview
       innerRef={measureRef}
       width={contentRect.client.width}
       {...rest}
