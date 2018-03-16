@@ -39,20 +39,20 @@ export const Instructions = ({ instructions }) => (
   </InstructionsRoot>
 );
 
-export const MealDisplay = ({ name, thumb, ingredients, instructions }) => {
+export const MealDisplay = ({ meal }) => {
   return (
     <Root>
-      <Image src={thumb} alt={name} />
+      <Image src={meal.thumb} alt={meal.name} />
       <Tabs>
         <TabList>
           <Tab>Ingredients</Tab>
           <Tab>Instructions</Tab>
         </TabList>
         <TabPanel>
-          <Ingredients ingredients={ingredients} />
+          <Ingredients ingredients={meal.ingredients} />
         </TabPanel>
         <TabPanel>
-          <Instructions instructions={instructions} />
+          <Instructions instructions={meal.instructions} />
         </TabPanel>
       </Tabs>
     </Root>

@@ -20,15 +20,17 @@ describe("MealDisplay", () => {
 
   beforeEach(() => {
     props = {
-      name: "Meal's name",
-      area: "Canadian",
-      category: "Dessert",
-      thumb: "thumb.png",
-      ingredients: [
-        { name: "One", measure: "1" },
-        { name: "Two", measure: "2" }
-      ],
-      instructions: ["Step one", "Step two"]
+      meal: {
+        name: "Meal's name",
+        area: "Canadian",
+        category: "Dessert",
+        thumb: "thumb.png",
+        ingredients: [
+          { name: "One", measure: "1" },
+          { name: "Two", measure: "2" }
+        ],
+        instructions: ["Step one", "Step two"]
+      }
     };
   });
 
@@ -45,11 +47,11 @@ describe("MealDisplay", () => {
     });
 
     it("'src' prop is equal to the thumb", () => {
-      expect(wrapper.find(Image).prop("src")).toBe(props.thumb);
+      expect(wrapper.find(Image).prop("src")).toBe(props.meal.thumb);
     });
 
     it("'alt' prop is equal to the name", () => {
-      expect(wrapper.find(Image).prop("alt")).toBe(props.name);
+      expect(wrapper.find(Image).prop("alt")).toBe(props.meal.name);
     });
   });
 
@@ -61,14 +63,14 @@ describe("MealDisplay", () => {
   it("passes the ingredients prop to the Ingredients component", () => {
     const wrapper = shallow(<MealDisplay {...props} />);
     expect(wrapper.find(Ingredients).prop("ingredients")).toEqual(
-      props.ingredients
+      props.meal.ingredients
     );
   });
 
   it("passes instructions prop to the Instructions component", () => {
     const wrapper = shallow(<MealDisplay {...props} />);
     expect(wrapper.find(Instructions).prop("instructions")).toEqual(
-      props.instructions
+      props.meal.instructions
     );
   });
 
