@@ -20,28 +20,30 @@ describe("MealPreview", function() {
 
   beforeEach(() => {
     props = {
-      name: "Meal",
-      area: "Canadian",
-      category: "Dessert",
-      thumb: "meal.png"
+      meal: {
+        name: "Meal",
+        area: "Canadian",
+        category: "Dessert",
+        thumb: "meal.png"
+      }
     };
     wrapper = mount(<MealPreview {...props} />);
   });
 
   it("always render the meal thumb", () => {
     expect(wrapper.find(Thumb).length).toBe(1);
-    expect(wrapper.find("img").prop("src")).toEqual("meal.png");
+    expect(wrapper.find("img").prop("src")).toEqual(props.meal.thumb);
   });
 
-  it("always render the meal title", () => {
+  it("always render the meal name", () => {
     expect(wrapper.find(Title).length).toBe(1);
-    expect(wrapper.find(Title).text()).toBe(props.name);
+    expect(wrapper.find(Title).text()).toBe(props.meal.name);
   });
 
   it("always render the meal area and category", () => {
     const info = wrapper.find(Info);
     expect(info.length).toBe(1);
-    expect(info.text()).toBe(`${props.area} ${props.category}`);
+    expect(info.text()).toBe(`${props.meal.area} ${props.meal.category}`);
   });
 
   describe("when width <= SMALL_WIDTH", () => {
