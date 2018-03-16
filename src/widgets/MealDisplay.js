@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Tabs, Tab, TabList, TabPanel } from "react-tabs";
 
@@ -57,6 +58,10 @@ export const MealDisplay = ({ meal }) => {
       </Tabs>
     </Root>
   );
+};
+
+MealDisplay.propTypes = {
+  meal: PropTypes.object.isRequired
 };
 
 export default MealDisplay;
