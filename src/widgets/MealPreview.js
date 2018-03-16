@@ -12,13 +12,10 @@ export const Info = styled.h2``;
 export const Button = styled.button``;
 
 export const MealPreview = ({
+  meal,
   width,
   style,
   innerRef,
-  name,
-  area,
-  category,
-  thumb,
   onRequestMoreInfo,
   ...rest
 }) => {
@@ -38,10 +35,10 @@ export const MealPreview = ({
       onClick={onClickMiniature}
       {...rest}
     >
-      <Thumb src={thumb} />
-      <Title>{name}</Title>
+      <Thumb src={meal.thumb} />
+      <Title>{meal.name}</Title>
       <Info>
-        {area} {category}
+        {meal.area} {meal.category}
       </Info>
       {width > SMALL_WIDTH ? (
         <Button onClick={onClickButton}>More</Button>
@@ -51,13 +48,10 @@ export const MealPreview = ({
 };
 
 MealPreview.propTypes = {
+  meal: PropTypes.object.isRequired,
   width: PropTypes.number,
   style: PropTypes.object,
   innerRef: PropTypes.func,
-  name: PropTypes.string.isRequired,
-  category: PropTypes.string.isRequired,
-  area: PropTypes.string.isRequired,
-  thumb: PropTypes.string.isRequired,
   onRequestMoreInfo: PropTypes.func.isRequired
 };
 
