@@ -2,19 +2,19 @@ import React from "react";
 import Enzyme, { mount } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import {
-  MealMiniature,
+  MealPreview,
   Thumb,
   Title,
   Info,
   Button,
   SMALL_WIDTH
-} from "../../src/widgets/MealMiniature";
+} from "../../src/widgets/MealPreview";
 
 Enzyme.configure({
   adapter: new Adapter()
 });
 
-describe("MealMiniature", function() {
+describe("MealPreview", function() {
   let props;
   let wrapper;
 
@@ -25,7 +25,7 @@ describe("MealMiniature", function() {
       category: "Dessert",
       thumb: "meal.png"
     };
-    wrapper = mount(<MealMiniature {...props} />);
+    wrapper = mount(<MealPreview {...props} />);
   });
 
   it("always render the meal thumb", () => {
