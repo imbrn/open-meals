@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import TextField from "../elements/TextField";
 import SearchSvg from "../svg/search.svg";
@@ -34,68 +34,53 @@ const Form = styled.form`
   }
 `;
 
-export class SearchBox extends Component {
-  static propTypes = {
-    onSearch: PropTypes.func.isRequired,
-    size: PropTypes.oneOf(["small", "medium", "large"]).isRequired
-  };
-
-  static defaultProps = {
-    onSearch: () => {},
-    size: "small"
-  };
-
-  state = {
-    searchValue: ""
-  };
-
-  constructor(props) {
-    super(props);
-    this._handleSubmit = this._handleSubmit.bind(this);
-    this._handleInputChange = this._handleInputChange.bind(this);
-  }
-
-  render() {
-    const { innerRef, style, contentRect, ...rest } = this.props;
-
-    return (
-      <Form
-        role="searchbox"
-        style={style}
-        onSubmit={this._handleSubmit}
-        innerRef={innerRef}
-      >
-        <SearchInput
-          name="search"
-          value={this.state.searchValue}
-          aria-label="input"
-          onChange={this._handleInputChange}
-          {...rest}
-        />
-        {contentRect && contentRect.client.width > 480 ? (
-          <SearchButton aria-label="search">
-            <SearchSvg height="100%" width="100%" />
-          </SearchButton>
-        ) : null}
-      </Form>
-    );
-  }
-
-  _handleInputChange(e) {
-    this.setSearchValue(e.target.searchValue);
-  }
-
-  _handleSubmit(e) {
+export const SearchBox = ({
+  value,
+  contentRect,
+  onChange,
+  onSearch,
+  style,
+  ...rest
+}) => {
+  const handleSubmit = e => {
     e.preventDefault();
-    this.props.onSearch(this.state.searchValue);
-  }
+    onSearch(value);
+  };
 
-  setSearchValue(value) {
-    this.setState({
-      searchValue: value
-    });
-  }
-}
+  const handleInputChange = e => {
+    onChange(e.target.value);
+  };
+  return (
+    <Form role="searchbox" style={style} onSubmit={handleSubmit}>
+      <SearchInput
+        name="search"
+        value={value}
+        aria-label="input"
+        onChange={handleInputChange}
+        {...rest}
+      />
+      {contentRect && contentRect.client.width > 480 ? (
+        <SearchButton aria-label="search">
+          <SearchSvg height="100%" width="100%" />
+        </SearchButton>
+      ) : null}
+    </Form>
+  );
+};
+
+SearchBox.propTypes = {
+  value: PropTypes.string.isRequired,
+  contentRect: PropTypes.object,
+  onChange: PropTypes.func.isRequired,
+  onSearch: PropTypes.func.isRequired,
+  style: PropTypes.object
+};
+
+SearchBox.defaultProps = {
+  value: "",
+  onChange: () => {},
+  onSearch: () => {}
+};
 
 export default withContentRect("client")(({ measureRef, ...rest }) => (
   <SearchBox innerRef={measureRef} {...rest} />

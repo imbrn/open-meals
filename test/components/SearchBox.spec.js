@@ -1,5 +1,5 @@
 import React from "react";
-import Enzyme, { mount } from "enzyme";
+import Enzyme, { shallow, mount } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import { SearchBox } from "../../src/components/SearchBox";
 
@@ -9,47 +9,45 @@ Enzyme.configure({
 
 describe("SearchBox", function() {
   it("always render an input search", () => {
-    const wrapper = mount(<SearchBox />);
-    expect(wrapper.find("input").length).toBe(1);
+    const wrapper = shallow(<SearchBox />);
+    expect(wrapper.render().find("input").length).toBe(1);
   });
 
   describe("responsiveness", () => {
     it("does not render a search button when width <= 480", () => {
-      const wrapper = mount(<SearchBox />);
+      const wrapper = shallow(<SearchBox />);
       wrapper.setProps({ contentRect: { client: { width: 480 } } });
-      expect(wrapper.find("button").length).toBe(0);
+      expect(wrapper.render().find("button").length).toBe(0);
     });
 
     it("renders a search button when width > 480", () => {
-      const wrapper = mount(<SearchBox />);
+      const wrapper = shallow(<SearchBox />);
       wrapper.setProps({ contentRect: { client: { width: 481 } } });
-      expect(wrapper.find("button").length).toBe(1);
+      expect(wrapper.render().find("button").length).toBe(1);
     });
   });
 
   it("always prevent form from the defaults", () => {
     const preventDefault = jest.fn();
-    const withoutCallback = mount(<SearchBox />);
-    const withCallback = mount(<SearchBox onSearch={() => {}} />);
-    withoutCallback.find("form").simulate("submit", { preventDefault });
-    withCallback.find("form").simulate("submit", { preventDefault });
-    expect(preventDefault.mock.calls).toHaveLength(2);
+    const wrapper = mount(<SearchBox />);
+    wrapper.find("form").simulate("submit", { preventDefault });
+    expect(preventDefault.mock.calls.length).toBe(1);
   });
 
   describe("when onSearch callback is defined", () => {
     it("onSearch is called by the onSubmit", () => {
-      const callback = jest.fn();
-      const wrapper = mount(<SearchBox onSearch={callback} />);
+      const onSearch = jest.fn();
+      const wrapper = mount(<SearchBox onSearch={onSearch} />);
       wrapper.find("form").simulate("submit");
-      expect(callback.mock.calls).toHaveLength(1);
+      expect(onSearch.mock.calls).toHaveLength(1);
     });
+  });
 
-    it("onSearch receives the searched value", () => {
-      const callback = jest.fn();
-      const wrapper = mount(<SearchBox onSearch={callback} />);
-      wrapper.instance().setSearchValue("Search value");
-      wrapper.find("form").simulate("submit");
-      expect(callback.mock.calls[0][0]).toEqual("Search value");
-    });
+  describe("when onChange callback is defined", () => {
+    const onChange = jest.fn();
+    const wrapper = mount(<SearchBox onChange={onChange} />);
+    wrapper.find("input").simulate("change", { target: { value: "Search" } });
+    expect(onChange.mock.calls.length).toBe(1);
+    expect(onChange.mock.calls[0][0]).toBe("Search");
   });
 });
