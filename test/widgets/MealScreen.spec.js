@@ -1,8 +1,8 @@
 import React from "react";
 import Enzyme, { shallow, mount } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import {
-  MealScreen,
+import { setImpl as mockApi } from "../../src/api";
+import MealScreen, {
   Title,
   Info,
   CloseButton,
@@ -38,6 +38,11 @@ describe("MealScreen", () => {
       { id: 3, name: "Meal 2", area: "Area 2", category: "Category 2" },
       { id: 4, name: "Meal 3", area: "Area 3", category: "Category 3" }
     ];
+
+    // Mocks the Api implementation
+    mockApi({
+      fetchRelatedMeals: () => Promise.resolve(relatedMeals)
+    });
   });
 
   it("renders the meal name", () => {

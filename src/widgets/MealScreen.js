@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import MealPreview from "./MealPreview";
 import MealDisplay from "./MealDisplay";
-import withApi from "../api/withApi";
+import api from "../api";
 
 export const Title = styled.h1``;
 export const Info = styled.h2``;
@@ -19,7 +19,7 @@ export const RelatedMeals = ({ meals }) => (
 
 const MealScreenRoot = styled.div``;
 
-export class MealScreen extends Component {
+class MealScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,9 +28,9 @@ export class MealScreen extends Component {
   }
 
   componentDidMount() {
-    const { meal, fetchRelatedMeals } = this.props;
+    const { meal } = this.props;
     // Fetch related meals
-    fetchRelatedMeals(meal).then(relatedMeals => {
+    api.fetchRelatedMeals(meal).then(relatedMeals => {
       this.setState({
         relatedMeals
       });
@@ -56,13 +56,11 @@ export class MealScreen extends Component {
 
 MealScreen.propTypes = {
   meal: PropTypes.object.isRequired,
-  onRequestClose: PropTypes.func.isRequired,
-  fetchRelatedMeals: PropTypes.func.isRequired
+  onRequestClose: PropTypes.func.isRequired
 };
 
 MealScreen.defaultProps = {
-  onRequestClose: () => {},
-  fetchRelatedMeals: () => Promise.resolve([])
+  onRequestClose: () => {}
 };
 
-export default withApi(MealScreen);
+export default MealScreen;
