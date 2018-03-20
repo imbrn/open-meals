@@ -56,7 +56,7 @@ describe("MealScreen", () => {
     ).toEqual(meal.name);
   });
 
-  it("renders the mal area and category", () => {
+  it("renders the meal area and category", () => {
     const wrapper = shallow(<MealScreen meal={meal} />);
     expect(wrapper.find(Info).length).toBe(1);
     expect(
