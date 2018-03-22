@@ -1,7 +1,7 @@
 import React from "react";
 import Enzyme, { shallow } from "enzyme";
 import EnzymeReactAdapter from "enzyme-adapter-react-16";
-import ListView, { ListViewItem } from "../../src/components/ListView";
+import ListView, { ListViewItem } from "./ListView";
 
 Enzyme.configure({
   adapter: new EnzymeReactAdapter()

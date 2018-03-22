@@ -8,7 +8,7 @@ import {
   IngredientItem,
   Instructions,
   InstructionItem
-} from "../../src/widgets/MealDisplay";
+} from "./MealDisplay";
 import { Tabs, Tab } from "react-tabs";
 
 Enzyme.configure({

@@ -2,7 +2,7 @@ import React from "react";
 import { MemoryRouter, Link } from "react-router-dom";
 import Enzyme, { mount } from "enzyme";
 import EnzymeReactAdapter from "enzyme-adapter-react-16";
-import NavigationMenuLink from "../../src/components/NavigationMenu";
+import NavigationMenuLink from "./NavigationMenu";
 
 Enzyme.configure({
   adapter: new EnzymeReactAdapter()
