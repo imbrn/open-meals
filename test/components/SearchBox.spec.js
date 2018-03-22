@@ -13,18 +13,10 @@ describe("SearchBox", function() {
     expect(wrapper.render().find("input").length).toBe(1);
   });
 
-  describe("responsiveness", () => {
-    it("does not render a search button when width <= 480", () => {
-      const wrapper = shallow(<SearchBox />);
-      wrapper.setProps({ contentRect: { client: { width: 480 } } });
-      expect(wrapper.render().find("button").length).toBe(0);
-    });
-
-    it("renders a search button when width > 480", () => {
-      const wrapper = shallow(<SearchBox />);
-      wrapper.setProps({ contentRect: { client: { width: 481 } } });
-      expect(wrapper.render().find("button").length).toBe(1);
-    });
+  it("renders a search button", () => {
+    const wrapper = shallow(<SearchBox />);
+    wrapper.setProps({ contentRect: { client: { width: 481 } } });
+    expect(wrapper.render().find("button").length).toBe(1);
   });
 
   it("always prevent form from the defaults", () => {
