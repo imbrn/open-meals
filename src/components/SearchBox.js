@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import TextField from "../elements/TextField";
 import SearchSvg from "../svg/search.svg";
 import styled from "styled-components";
-import { withContentRect } from "react-measure";
 
 const SearchInput = TextField.extend`
   width: 100%;
@@ -34,14 +33,7 @@ const Form = styled.form`
   }
 `;
 
-export const SearchBox = ({
-  value,
-  contentRect,
-  onChange,
-  onSearch,
-  style,
-  ...rest
-}) => {
+export const SearchBox = ({ value, onChange, onSearch, style, ...rest }) => {
   const handleSubmit = e => {
     e.preventDefault();
     onSearch(value);
@@ -59,18 +51,15 @@ export const SearchBox = ({
         onChange={handleInputChange}
         {...rest}
       />
-      {contentRect && contentRect.client.width > 480 ? (
-        <SearchButton aria-label="search">
-          <SearchSvg height="100%" width="100%" />
-        </SearchButton>
-      ) : null}
+      <SearchButton aria-label="search">
+        <SearchSvg height="100%" width="100%" />
+      </SearchButton>
     </Form>
   );
 };
 
 SearchBox.propTypes = {
   value: PropTypes.string.isRequired,
-  contentRect: PropTypes.object,
   onChange: PropTypes.func.isRequired,
   onSearch: PropTypes.func.isRequired,
   style: PropTypes.object
@@ -82,6 +71,4 @@ SearchBox.defaultProps = {
   onSearch: () => {}
 };
 
-export default withContentRect("client")(({ measureRef, ...rest }) => (
-  <SearchBox innerRef={measureRef} {...rest} />
-));
+export default SearchBox;
