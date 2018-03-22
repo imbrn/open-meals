@@ -7,9 +7,9 @@ import {
   Info,
   CloseButton,
   RelatedMeals
-} from "../../src/widgets/MealScreen";
-import MealDisplay from "../../src/widgets/MealDisplay";
-import MealPreview from "../../src/widgets/MealPreview";
+} from "./MealScreen";
+import MealDisplay from "../MealDisplay";
+import MealPreview from "../MealPreview";
 
 Enzyme.configure({
   adapter: new Adapter()

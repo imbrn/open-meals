@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TextField from "../elements/TextField";
-import SearchSvg from "../svg/search.svg";
+import TextField from "../TextField";
+import SearchSvg from "../search.svg";
 import styled from "styled-components";
 
 const SearchInput = TextField.extend`

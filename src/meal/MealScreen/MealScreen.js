@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import MealPreview from "./MealPreview";
-import MealDisplay from "./MealDisplay";
-import { withApi } from "../api";
+import MealPreview from "../MealPreview";
+import MealDisplay from "../MealDisplay";
+import { withApi } from "../../api";
 
 export const Title = styled.h1``;
 export const Info = styled.h2``;
