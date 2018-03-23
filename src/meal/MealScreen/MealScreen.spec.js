@@ -1,8 +1,7 @@
 import React from "react";
 import Enzyme, { shallow, mount } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import {
-  MealScreen,
+import MealScreen, {
   Title,
   Info,
   CloseButton,
@@ -17,7 +16,6 @@ Enzyme.configure({
 
 describe("MealScreen", () => {
   let meal;
-  let relatedMeals;
 
   beforeAll(() => {
     meal = {
@@ -32,16 +30,10 @@ describe("MealScreen", () => {
       ],
       instructions: ["Step one", "Step two", "Step three"]
     };
-
-    relatedMeals = [
-      { id: 2, name: "Meal 1", area: "Area 1", category: "Category 1" },
-      { id: 3, name: "Meal 2", area: "Area 2", category: "Category 2" },
-      { id: 4, name: "Meal 3", area: "Area 3", category: "Category 3" }
-    ];
   });
 
   it("renders the meal name", () => {
-    const wrapper = shallow(<MealScreen meal={meal} />);
+    const wrapper = mount(<MealScreen meal={meal} />);
     expect(wrapper.find(Title).length).toBe(1);
     expect(
       wrapper
@@ -52,7 +44,7 @@ describe("MealScreen", () => {
   });
 
   it("renders the meal area and category", () => {
-    const wrapper = shallow(<MealScreen meal={meal} />);
+    const wrapper = mount(<MealScreen meal={meal} />);
     expect(wrapper.find(Info).length).toBe(1);
     expect(
       wrapper
@@ -63,13 +55,13 @@ describe("MealScreen", () => {
   });
 
   it("renders a close button", () => {
-    const wrapper = shallow(<MealScreen meal={meal} />);
+    const wrapper = mount(<MealScreen meal={meal} />);
     expect(wrapper.find(CloseButton).length).toBe(1);
   });
 
   it("calls onRequestClose when CloseButton is clicked", () => {
     const onRequestClose = jest.fn();
-    const wrapper = shallow(
+    const wrapper = mount(
       <MealScreen meal={meal} onRequestClose={onRequestClose} />
     );
     wrapper.find(CloseButton).simulate("click");
@@ -77,19 +69,26 @@ describe("MealScreen", () => {
   });
 
   it("renders a MealDisplay", () => {
-    const wrapper = shallow(<MealScreen meal={meal} />);
+    const wrapper = mount(<MealScreen meal={meal} />);
     expect(wrapper.find(MealDisplay).length).toBe(1);
   });
 
   it("passes the meal prop to the MealDisplay", () => {
-    const wrapper = shallow(<MealScreen meal={meal} />);
+    const wrapper = mount(<MealScreen meal={meal} />);
     expect(wrapper.find(MealDisplay).prop("meal")).toEqual(meal);
   });
 
   it("renders related meals", async done => {
+    const relatedMeals = [
+      { id: 2, name: "Meal 1", area: "Area 1", category: "Category 1" },
+      { id: 3, name: "Meal 2", area: "Area 2", category: "Category 2" },
+      { id: 4, name: "Meal 3", area: "Area 3", category: "Category 3" }
+    ];
+
     const fetchRelatedMeals = jest
       .fn()
       .mockReturnValue(Promise.resolve(relatedMeals));
+
     const wrapper = mount(
       <MealScreen meal={meal} fetchRelatedMeals={fetchRelatedMeals} />
     );

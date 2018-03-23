@@ -19,7 +19,7 @@ export const RelatedMeals = ({ meals }) => (
 
 const MealScreenRoot = styled.div``;
 
-export class MealScreen extends Component {
+class MealScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
