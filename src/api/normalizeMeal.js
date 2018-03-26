@@ -36,7 +36,7 @@ function normalizeInstructions(rawMeal) {
 }
 
 function normalizeTags(rawMeal) {
-  return rawMeal.strTags.split(", ");
+  return rawMeal.strTags ? rawMeal.strTags.split(", ") : [];
 }
 
 export default normalizeMeal;
