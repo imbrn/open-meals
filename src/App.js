@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
-import Main from "./pages/Main";
-import { injectGlobal } from "styled-components";
+import styled, { injectGlobal } from "styled-components";
+import SearchPage from "./search/SearchPage";
 
 injectGlobal`
   @import url('https://fonts.googleapis.com/css?family=Lobster|Roboto+Slab');
@@ -23,7 +23,7 @@ injectGlobal`
   }
 
   :root {
-    --color-background: #82526e;
+    --color-background: #7f3e7cff;
     --color-black: rgb(30, 18, 18);
     --color-black-alpha-1: rgba(30, 18, 18, 0.75);
     --color-black-alpha-2: rgba(30, 18, 18, 0.25);
@@ -34,9 +34,23 @@ injectGlobal`
   }
 `;
 
+const Root = styled.div`
+  background: var(--color-background);
+  min-height: 100%;
+`;
+
+const ActiveContent = styled.div`
+  max-width: 1000px;
+  margin: 0 auto;
+`;
+
 const App = () => (
   <BrowserRouter>
-    <Main />
+    <Root>
+      <ActiveContent>
+        <SearchPage />
+      </ActiveContent>
+    </Root>
   </BrowserRouter>
 );
 
