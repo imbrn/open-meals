@@ -2,6 +2,7 @@ import React from "react";
 import Enzyme, { mount } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import MealPreview, { Thumb, Title, Info, Button } from "./MealPreview";
+import imageLoader from "../../common/imageLoader";
 
 Enzyme.configure({
   adapter: new Adapter()
@@ -19,38 +20,80 @@ describe("MealPreview", function() {
         thumb: "meal.png"
       }
     };
+    // Mocks the image loading process
+    imageLoader.impl = () => Promise.resolve(new Image());
   });
 
-  it("always render the meal thumb", () => {
+  it("always render the meal thumb", async done => {
     const wrapper = mount(<MealPreview {...props} />);
-    expect(wrapper.find(Thumb).length).toBe(1);
-    expect(wrapper.find("img").prop("src")).toEqual(props.meal.thumb);
+    setImmediate(() => {
+      try {
+        wrapper.update();
+        expect(wrapper.find(Thumb).length).toBe(1);
+        expect(wrapper.find("img").prop("src")).toEqual(props.meal.thumb);
+      } catch (error) {
+        done.fail(error);
+      }
+      done();
+    });
   });
 
-  it("always render the meal name", () => {
+  it("always render the meal name", async done => {
     const wrapper = mount(<MealPreview {...props} />);
-    expect(wrapper.find(Title).length).toBe(1);
-    expect(wrapper.find(Title).text()).toBe(props.meal.name);
+    setImmediate(() => {
+      try {
+        wrapper.update();
+        expect(wrapper.find(Title).length).toBe(1);
+        expect(wrapper.find(Title).text()).toBe(props.meal.name);
+      } catch (error) {
+        done.fail(error);
+      }
+      done();
+    });
   });
 
-  it("always render the meal area and category", () => {
+  it("always render the meal area and category", async done => {
     const wrapper = mount(<MealPreview {...props} />);
-    const info = wrapper.find(Info);
-    expect(info.length).toBe(1);
-    expect(info.text()).toBe(`${props.meal.area} ${props.meal.category}`);
+    setImmediate(() => {
+      try {
+        wrapper.update();
+        const info = wrapper.find(Info);
+        expect(info.length).toBe(1);
+        expect(info.text()).toBe(`${props.meal.area} ${props.meal.category}`);
+      } catch (error) {
+        done.fail(error);
+      }
+      done();
+    });
   });
 
-  it("renders a 'More' button", () => {
+  it("renders a 'More' button", async done => {
     const wrapper = mount(<MealPreview {...props} />);
-    expect(wrapper.find(Button).length).toBe(1);
+    setImmediate(() => {
+      try {
+        wrapper.update();
+        expect(wrapper.find(Button).length).toBe(1);
+      } catch (error) {
+        done.fail(error);
+      }
+      done();
+    });
   });
 
-  it("calls onRequestMoreInfo when click in the button more", () => {
+  it("calls onRequestMoreInfo when click in the button more", async done => {
     const onRequestMoreInfo = jest.fn();
     const wrapper = mount(
       <MealPreview {...props} onRequestMoreInfo={onRequestMoreInfo} />
     );
-    wrapper.find(Button).simulate("click");
-    expect(onRequestMoreInfo.mock.calls).toHaveLength(1);
+    setImmediate(() => {
+      try {
+        wrapper.update();
+        wrapper.find(Button).simulate("click");
+        expect(onRequestMoreInfo.mock.calls).toHaveLength(1);
+      } catch (error) {
+        done.fail(error);
+      }
+      done();
+    });
   });
 });
