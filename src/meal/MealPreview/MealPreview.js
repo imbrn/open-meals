@@ -2,18 +2,50 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { withImageLoader } from "../../common/imageLoader";
+import LoadingPreview from "./Loading";
+import Button from "../../common/Button";
 
 const Root = styled.div`
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-black-alpha-3);
+  box-shadow: var(--box-shadow-1);
 `;
 
 export const Thumb = styled.img`
   width: 100%;
 `;
 
-export const Title = styled.h1``;
-export const Info = styled.h2``;
-export const Button = styled.button``;
+export const Content = styled.div`
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px;
+`;
+
+export const Title = styled.h1`
+  font-family: var(--font-cursive);
+  color: var(--color-white);
+  font-size: 1.15rem;
+  font-weight: 400;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+`;
+
+export const Info = styled.h2`
+  color: var(--color-black-alpha-1);
+  font-size: 0.75rem;
+  font-weight: 400;
+  text-align: center;
+  margin: 0;
+  margin-bottom: 10px;
+  padding: 0;
+  flex-grow: 1;
+`;
+
+export const MoreButton = Button.extend``;
 
 class MealPreview extends Component {
   static propTypes = {
@@ -69,7 +101,7 @@ class MealPreview extends Component {
   }
 
   _renderLoading() {
-    return "Loading...";
+    return <LoadingPreview />;
   }
 
   _renderReady() {
@@ -77,13 +109,15 @@ class MealPreview extends Component {
     return (
       <Root style={style} innerRef={innerRef} {...rest}>
         <Thumb src={meal.thumb} />
-        <Title>{meal.name}</Title>
-        <Info>
-          {meal.area} {meal.category}
-        </Info>
-        <Button onClick={this._makeMoreClickHandler(onRequestMoreInfo)}>
-          More
-        </Button>
+        <Content>
+          <Title>{meal.name}</Title>
+          <Info>
+            {meal.area} {meal.category}
+          </Info>
+          <MoreButton onClick={this._makeMoreClickHandler(onRequestMoreInfo)}>
+            More
+          </MoreButton>
+        </Content>
       </Root>
     );
   }

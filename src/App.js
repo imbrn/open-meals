@@ -31,6 +31,7 @@ injectGlobal`
     --color-white: #ffffff;
     --font-cursive: 'Lobster', cursive;
     --font-serif: 'Roboto Slab', serif;
+    --box-shadow-1: 2px 2px 8px rgba(0, 0, 0, 0.1);
   }
 `;
 
