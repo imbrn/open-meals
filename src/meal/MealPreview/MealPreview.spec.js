@@ -1,7 +1,7 @@
 import React from "react";
 import Enzyme, { mount } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import MealPreview, { Thumb, Title, Info, Button } from "./MealPreview";
+import MealPreview, { Thumb, Title, Info, MoreButton } from "./MealPreview";
 import imageLoader from "../../common/imageLoader";
 
 Enzyme.configure({
@@ -72,7 +72,7 @@ describe("MealPreview", function() {
     setImmediate(() => {
       try {
         wrapper.update();
-        expect(wrapper.find(Button).length).toBe(1);
+        expect(wrapper.find(MoreButton).length).toBe(1);
       } catch (error) {
         done.fail(error);
       }
@@ -88,7 +88,7 @@ describe("MealPreview", function() {
     setImmediate(() => {
       try {
         wrapper.update();
-        wrapper.find(Button).simulate("click");
+        wrapper.find(MoreButton).simulate("click");
         expect(onRequestMoreInfo.mock.calls).toHaveLength(1);
       } catch (error) {
         done.fail(error);

@@ -6,7 +6,7 @@ function withApi(apiFunctions) {
     const WithApiWrapper = ({ children, ...rest }) => {
       const usedFunctions = {};
 
-      for (const fn in apiFunctions) {
+      for (const fn of apiFunctions) {
         if (fn in withApi) {
           usedFunctions[fn] = withApi[fn];
         } else {
