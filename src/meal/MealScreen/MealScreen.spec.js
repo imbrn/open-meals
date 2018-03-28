@@ -9,6 +9,7 @@ import MealScreen, {
 } from "./MealScreen";
 import MealDisplay from "../MealDisplay";
 import MealPreview from "../MealPreview";
+import imageLoader from "../../common/imageLoader";
 
 Enzyme.configure({
   adapter: new Adapter()
@@ -30,6 +31,7 @@ describe("MealScreen", () => {
       ],
       instructions: ["Step one", "Step two", "Step three"]
     };
+    imageLoader.impl = () => Promise.resolve(new Image());
   });
 
   it("renders the meal name", () => {
