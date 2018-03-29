@@ -13,6 +13,7 @@ const SearchInput = TextField.extend`
 `;
 
 const SearchButton = styled.button`
+  display: none;
   position: absolute;
   top: 50%;
   right: 32px;
@@ -24,6 +25,9 @@ const SearchButton = styled.button`
   color: var(--color-black-alpha-1);
   border: none;
   cursor: pointer;
+  @media (min-width: 512px) {
+    display: block;
+  }
 `;
 
 const SearchForm = styled.form`

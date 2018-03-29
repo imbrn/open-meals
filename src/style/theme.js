@@ -17,10 +17,13 @@ export const themeConfig = `
 `;
 
 export const themeDefaults = `
-  html, body, #app {
-    height: 100%;
+  html, body {
     font-family: var(--font-sans-serif);
     font-size: 16px;
+    height: 100%;
+  }
+  #app {
+    height: 100%;
   }
   *, *::before, *::after {
     box-sizing: border-box;

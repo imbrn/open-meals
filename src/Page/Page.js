@@ -5,8 +5,8 @@ import Navigation from "./Navigation";
 
 const Root = styled.div`
   background: var(--color-background);
-  min-height: 100%;
   padding: 32px;
+  min-height: 100%;
 `;
 
 const Content = styled.div`
