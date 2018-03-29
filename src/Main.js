@@ -1,16 +1,11 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import routes from "./routes";
-import { themeDeps, themeConfig, reset as cssReset } from "./style";
+import { theme } from "./style";
 import { injectGlobal } from "styled-components";
 
 injectGlobal`
-  ${cssReset}
-  ${themeDeps}
-  :root {
-    ${themeConfig}
-  }
-  html, body, #app { height: 100%; }
+  ${theme}
 `;
 
 const Main = () => (
