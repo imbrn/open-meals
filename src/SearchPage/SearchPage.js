@@ -92,7 +92,9 @@ Object.assign(showingLatestMealsState, {
 const searchingMealsState = Object.create(readyToSearchState);
 Object.assign(searchingMealsState, {
   renderMeals() {
-    return "Searching meals...";
+    return (
+      <LoadingMessageContainer>Searching meals...</LoadingMessageContainer>
+    );
   }
 });
 

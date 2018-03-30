@@ -3,11 +3,24 @@ import styled from "styled-components";
 import Button from "../Button";
 import imageLoader from "../imageLoader";
 
-const Preview = styled.div`
+const Content = styled.div`
   display: flex;
+  height: 100%;
   flex-direction: column;
   align-items: center;
   background: var(--color-black-alpha-2);
+  transform-style: preserve-3d;
+  transition: transform 1s;
+`;
+
+const Preview = styled.div`
+  perspective: 800px;
+
+  &.closed {
+    & > ${Content} {
+      transform: rotateY(90deg);
+    }
+  }
 `;
 
 const Thumb = styled.img`
@@ -55,6 +68,10 @@ class MealPreview extends Component {
   }
 
   _loadDataAsync() {
+    this.setState({
+      state: loadingState
+    });
+
     const { meal } = this.props;
     imageLoader(meal.thumb)
       .then(() => {
@@ -88,22 +105,34 @@ const emptyState = {
   }
 };
 
+const PreviewComponent = ({ meal, ...rest }) => (
+  <Preview {...rest}>
+    <Content>
+      <Thumb src={meal.thumb} />
+      <PreviewContent>
+        <Title>{meal.name}</Title>
+        <Type>
+          {meal.area} {meal.category}
+        </Type>
+        <MoreButton>More</MoreButton>
+      </PreviewContent>
+    </Content>
+  </Preview>
+);
+
+// Loading state
+const loadingState = Object.create(emptyState);
+Object.assign(loadingState, {
+  render() {
+    return <PreviewComponent meal={this.props.meal} className={"closed"} />;
+  }
+});
+
+// Loaded state
 const loadedState = Object.create(emptyState);
 Object.assign(loadedState, {
   render() {
-    const { meal } = this.props;
-    return (
-      <Preview>
-        <Thumb src={meal.thumb} />
-        <PreviewContent>
-          <Title>{meal.name}</Title>
-          <Type>
-            {meal.area} {meal.category}
-          </Type>
-          <MoreButton>More</MoreButton>
-        </PreviewContent>
-      </Preview>
-    );
+    return <PreviewComponent meal={this.props.meal} />;
   }
 });
 
