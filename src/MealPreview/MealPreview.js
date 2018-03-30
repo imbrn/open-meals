@@ -3,137 +3,136 @@ import styled from "styled-components";
 import Button from "../Button";
 import imageLoader from "../imageLoader";
 
-const Content = styled.div`
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-  align-items: center;
-  background: var(--color-black-alpha-2);
-  transform-style: preserve-3d;
-  transition: transform 1s;
-`;
-
-const Preview = styled.div`
-  perspective: 800px;
-
-  &.closed {
-    & > ${Content} {
-      transform: rotateY(90deg);
-    }
-  }
-`;
-
-const Thumb = styled.img`
-  width: 100%;
-`;
-
-const PreviewContent = styled.div`
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 16px;
-`;
-
-const Title = styled.h1`
-  font-size: 1.15rem;
-  font-weight: 600;
-  color: var(--color-white);
-  text-align: center;
-`;
-
-const Type = styled.h2`
-  flex-grow: 1;
-  text-align: center;
-  margin-top: 8px;
-`;
-
-const MoreButton = Button.extend`
-  height: 40px;
-  width: 72px;
-  border-radius: 40px;
-  margin-top: 16px;
-`;
-
 class MealPreview extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      state: emptyState
+      state: "ready"
     };
   }
 
   componentDidMount() {
-    this._loadDataAsync();
-  }
-
-  _loadDataAsync() {
     this.setState({
-      state: loadingState
+      state: "loading"
     });
 
     const { meal } = this.props;
     imageLoader(meal.thumb)
       .then(() => {
-        this._onLoad();
+        this.setState({
+          state: "loaded"
+        });
       })
       .catch(() => {
-        this._onLoadFailed();
+        this.setState({
+          state: "loaded"
+        });
       });
   }
 
-  _onLoad() {
-    this.setState({
-      state: loadedState
-    });
-  }
-
-  _onLoadFailed() {
-    this.setState({
-      state: loadedState
-    });
-  }
-
   render() {
-    return this.state.state.render.call(this);
+    return (
+      <CardContainer className={this.state.state}>
+        <Card>
+          <Cover>Open Meals</Cover>
+          <Content>
+            <Meal meal={this.props.meal} />
+          </Content>
+        </Card>
+      </CardContainer>
+    );
   }
 }
 
-const emptyState = {
-  render() {
-    return null;
-  }
-};
+const Card = styled.div`
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 1s;
+`;
 
-const PreviewComponent = ({ meal, ...rest }) => (
-  <Preview {...rest}>
-    <Content>
-      <Thumb src={meal.thumb} />
-      <PreviewContent>
-        <Title>{meal.name}</Title>
-        <Type>
-          {meal.area} {meal.category}
-        </Type>
-        <MoreButton>More</MoreButton>
-      </PreviewContent>
-    </Content>
-  </Preview>
+const Cover = styled.div`
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--color-black-alpha-3);
+  color: var(--color-black-alpha-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-cursive);
+  font-size: 1.5rem;
+`;
+
+const Content = styled.div`
+  height: 100%;
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
+`;
+
+const CardContainer = styled.div`
+  perspective: 1200px;
+
+  &.loaded {
+    display: block;
+    & > ${Card} {
+      transform: rotateY(180deg);
+    }
+  }
+`;
+
+const MealRoot = styled.div`
+  height: 100%;
+  background: var(--color-black-alpha-2);
+  display: flex;
+  flex-direction: column;
+`;
+
+const MealThumb = styled.img`
+  width: 100%;
+`;
+
+const MealInfo = styled.div`
+  padding: 16px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const MealName = styled.h1`
+  text-align: center;
+  color: var(--color-white);
+  font-size: 1.15rem;
+  font-weight: 600;
+`;
+
+const MealType = styled.h1`
+  text-align: center;
+  flex-grow: 1;
+  margin-top: 8px;
+`;
+
+const MoreButton = Button.extend`
+  height: 32px;
+  border-radius: 32px;
+  padding: 0 16px;
+  margin-top: 16px;
+`;
+
+const Meal = ({ meal }) => (
+  <MealRoot>
+    <MealThumb src={meal.thumb} />
+    <MealInfo>
+      <MealName>{meal.name}</MealName>
+      <MealType>
+        {meal.area} {meal.category}
+      </MealType>
+      <MoreButton>More</MoreButton>
+    </MealInfo>
+  </MealRoot>
 );
-
-// Loading state
-const loadingState = Object.create(emptyState);
-Object.assign(loadingState, {
-  render() {
-    return <PreviewComponent meal={this.props.meal} className={"closed"} />;
-  }
-});
-
-// Loaded state
-const loadedState = Object.create(emptyState);
-Object.assign(loadedState, {
-  render() {
-    return <PreviewComponent meal={this.props.meal} />;
-  }
-});
 
 export default MealPreview;
