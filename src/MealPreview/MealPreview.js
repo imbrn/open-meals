@@ -1,25 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import Button from "../Button";
-
-class MealPreview extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      state: loadedState
-    };
-  }
-
-  render() {
-    return this.state.state.render.call(this);
-  }
-}
-
-const emptyState = {
-  render() {
-    return null;
-  }
-};
+import imageLoader from "../imageLoader";
 
 const Preview = styled.div`
   display: flex;
@@ -59,6 +41,52 @@ const MoreButton = Button.extend`
   border-radius: 40px;
   margin-top: 16px;
 `;
+
+class MealPreview extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      state: emptyState
+    };
+  }
+
+  componentDidMount() {
+    this._loadDataAsync();
+  }
+
+  _loadDataAsync() {
+    const { meal } = this.props;
+    imageLoader(meal.thumb)
+      .then(() => {
+        this._onLoad();
+      })
+      .catch(() => {
+        this._onLoadFailed();
+      });
+  }
+
+  _onLoad() {
+    this.setState({
+      state: loadedState
+    });
+  }
+
+  _onLoadFailed() {
+    this.setState({
+      state: loadedState
+    });
+  }
+
+  render() {
+    return this.state.state.render.call(this);
+  }
+}
+
+const emptyState = {
+  render() {
+    return null;
+  }
+};
 
 const loadedState = Object.create(emptyState);
 Object.assign(loadedState, {

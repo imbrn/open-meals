@@ -5,25 +5,68 @@ import styled from "styled-components";
 import { withApi } from "../api";
 import MealsList from "../MealsList/MealsList";
 
-const SearchBoxWrapper = styled.div`
+// Empty state (base state)
+const emptyState = {
+  renderMeals() {
+    return null;
+  },
+  handleSearchChange() {},
+  handleSearch() {}
+};
+
+const LoadingMessageContainer = styled.div`
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-white);
+  font-size: 1.5rem;
+  font-family: var(--font-cursive);
+`;
+
+// Fetching latest meals state
+const fetchingLatestMealsState = Object.create(emptyState);
+Object.assign(fetchingLatestMealsState, {
+  renderMeals() {
+    return (
+      <LoadingMessageContainer>
+        Fetching latest meals...
+      </LoadingMessageContainer>
+    );
+  }
+});
+
+const MealsListTitle = styled.h1`
+  margin-bottom: 16px;
+  font-family: var(--font-cursive);
+  font-weight: 400;
+  font-size: 1.5rem;
+  color: var(--color-white);
+`;
+
+// Showing latest meals state
+const showingLatestMealsState = Object.create(emptyState);
+Object.assign(showingLatestMealsState, {
+  renderMeals() {
+    return (
+      <Fragment>
+        <MealsListTitle>Latest meals</MealsListTitle>
+        <MealsList meals={this.state.latestMeals} />
+      </Fragment>
+    );
+  }
+});
+
+const SearchBoxWrapper = styled(SearchBox)`
   width: 100%;
-  margin: 0 auto;
+  margin: 64px auto;
   @media (min-width: 768px) {
     width: 70%;
   }
 `;
 
-const ResultsWrapper = styled.div`
-  margin-top: 64px;
-`;
-
-const MealsListTitle = styled.h1`
-  font-weight: 600;
-  font-size: 1.5rem;
-  color: var(--color-white);
-  margin-bottom: 16px;
-`;
-
+// SearchPage component
 class SearchPage extends Component {
   constructor(props) {
     super(props);
@@ -53,15 +96,13 @@ class SearchPage extends Component {
   render() {
     return (
       <Page>
-        <SearchBoxWrapper>
-          <SearchBox
-            value={this.state.searchTerm}
-            onChange={this._handleSearchChange}
-            onSearch={this._handleSearch}
-            placeholder="Search meals by name"
-          />
-        </SearchBoxWrapper>
-        <ResultsWrapper>{this._renderMeals()}</ResultsWrapper>
+        <SearchBoxWrapper
+          value={this.state.searchTerm}
+          onChange={this._handleSearchChange}
+          onSearch={this._handleSearch}
+          placeholder="Search meals by name"
+        />
+        {this._renderMeals()}
       </Page>
     );
   }
@@ -78,32 +119,5 @@ class SearchPage extends Component {
     return this.state.state.handleSearch(this);
   }
 }
-
-const emptyState = {
-  renderMeals() {
-    return null;
-  },
-  handleSearchChange() {},
-  handleSearch() {}
-};
-
-const fetchingLatestMealsState = Object.create(emptyState);
-Object.assign(fetchingLatestMealsState, {
-  renderMeals() {
-    return "Fetching latest meals...";
-  }
-});
-
-const showingLatestMealsState = Object.create(emptyState);
-Object.assign(showingLatestMealsState, {
-  renderMeals() {
-    return (
-      <Fragment>
-        <MealsListTitle>Latest meals</MealsListTitle>
-        <MealsList meals={this.state.latestMeals} />
-      </Fragment>
-    );
-  }
-});
 
 export default withApi(["fetchLatestMeals"])(SearchPage);

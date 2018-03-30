@@ -34,7 +34,7 @@ const SearchForm = styled.form`
   position: relative;
 `;
 
-const SearchBox = ({ value, onChange, onSearch, ...rest }) => {
+const SearchBox = ({ value, placeholder, onChange, onSearch, ...rest }) => {
   const handleInputChange = e => onChange(e.target.value);
 
   const handleSubmit = e => {
@@ -43,13 +43,13 @@ const SearchBox = ({ value, onChange, onSearch, ...rest }) => {
   };
 
   return (
-    <SearchForm role="searchbox" onSubmit={handleSubmit}>
+    <SearchForm {...rest} role="searchbox" onSubmit={handleSubmit}>
       <SearchInput
         name="searchInput"
         value={value}
+        placeholder={placeholder}
         arial-label="input"
         onChange={handleInputChange}
-        {...rest}
       />
       <SearchButton arial-label="button">
         <SearchIcon height="100%" width="100%" />
@@ -60,6 +60,7 @@ const SearchBox = ({ value, onChange, onSearch, ...rest }) => {
 
 SearchBox.propTypes = {
   value: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   onSearch: PropTypes.func.isRequired
 };

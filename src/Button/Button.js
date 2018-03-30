@@ -5,6 +5,14 @@ const Button = styled.button`
   border: 2px solid var(--color-white);
   color: var(--color-white);
   font-weight: 500;
+  cursor: pointer;
+  &:hover {
+    background: var(--color-white);
+    color: var(--color-black);
+  }
+  &:active {
+    transform: scale(1.05);
+  }
 `;
 
 export default Button;

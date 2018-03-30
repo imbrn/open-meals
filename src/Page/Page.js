@@ -4,26 +4,30 @@ import Container from "../Container";
 import Navigation from "./Navigation";
 
 const Root = styled.div`
-  background: var(--color-background);
-  padding: 32px;
+  display: flex;
+  flex-direction: column;
   min-height: 100%;
+  padding: 32px;
+  background: var(--color-background);
 `;
 
-const Content = styled.div`
-  margin: 72px 32px;
+const Content = Container.extend`
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
 `;
 
 const Page = ({ children, ...rest }) => (
   <Root {...rest}>
-    <Container>
+    <Content>
       <Navigation
         items={[
           { id: "search", label: "Search", path: "/search" },
           { id: "browse", label: "Browse", path: "/browse" }
         ]}
       />
-      <Content>{children}</Content>
-    </Container>
+      {children}
+    </Content>
   </Root>
 );
 
