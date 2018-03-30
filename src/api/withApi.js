@@ -1,28 +1,22 @@
 import React from "react";
 import * as api from "./api";
 
-function withApi(apiFunctions) {
+const withApi = apiFunctions => {
   return component => {
     const WithApiWrapper = ({ children, ...rest }) => {
-      const usedFunctions = {};
-
-      for (const fn of apiFunctions) {
-        if (fn in withApi) {
-          usedFunctions[fn] = withApi[fn];
-        } else {
-          usedFunctions[fn] = api[fn];
-        }
-      }
-
-      const Comp = component;
+      const functions = {};
+      apiFunctions.forEach(fn => {
+        functions[fn] = api[fn];
+      });
+      const C = component;
       return (
-        <Comp {...usedFunctions} {...rest}>
+        <C {...rest} {...functions}>
           {children}
-        </Comp>
+        </C>
       );
     };
     return WithApiWrapper;
   };
-}
+};
 
 export default withApi;

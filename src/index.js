@@ -1,8 +1,8 @@
 import React from "react";
 import { render } from "react-dom";
-import App from "./App";
+import Main from "./Main";
 
-render(<App />, document.getElementById("app"));
+render(<Main />, document.getElementById("app"));
 
 if (module.hot) {
   module.hot.accept();

@@ -1,16 +1,14 @@
 import normalizeMeal from "./normalizeMeal";
 
-export const fetchLatestMeals = () => {
-  return fetchMeals("https://www.themealdb.com/api/json/v1/1/latest.php");
-};
-
-export const fetchRelatedMeals = () => Promise.resolve([]);
-
-export const searchMealsByName = value => {
+export function searchMealsByName(string) {
   return fetchMeals(
-    `https://www.themealdb.com/api/json/v1/1/search.php?s=${value}`
+    `https://www.themealdb.com/api/json/v1/1/search.php?s=${string}`
   );
-};
+}
+
+export function fetchLatestMeals() {
+  return fetchMeals("https://www.themealdb.com/api/json/v1/1/latest.php");
+}
 
 function fetchMeals(url) {
   return fetch(url)
@@ -18,9 +16,3 @@ function fetchMeals(url) {
     .then(json => json.meals || [])
     .then(meals => meals.map(normalizeMeal));
 }
-
-export default {
-  fetchRelatedMeals,
-  fetchLatestMeals,
-  searchMealsByName
-};
