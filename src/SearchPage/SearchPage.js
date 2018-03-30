@@ -14,6 +14,36 @@ const emptyState = {
   handleSearch() {}
 };
 
+// Ready to search base state
+const readyToSearchState = {
+  handleSearchChange(value) {
+    this.setState({
+      searchTerm: value
+    });
+  },
+
+  handleSearch() {
+    const searchTerm = this.state.searchTerm;
+
+    if (searchTerm && searchTerm.trim().length > 0) {
+      this.setState({
+        state: searchingMealsState,
+        searchedTerm: searchTerm
+      });
+      this.props.searchMealsByName(searchTerm).then(results => {
+        this.setState({
+          state: showingMealsState,
+          foundMeals: results
+        });
+      });
+    } else {
+      this.setState({
+        state: showingLatestMealsState
+      });
+    }
+  }
+};
+
 const LoadingMessageContainer = styled.div`
   display: flex;
   flex-grow: 1;
@@ -26,7 +56,7 @@ const LoadingMessageContainer = styled.div`
 `;
 
 // Fetching latest meals state
-const fetchingLatestMealsState = Object.create(emptyState);
+const fetchingLatestMealsState = Object.create(readyToSearchState);
 Object.assign(fetchingLatestMealsState, {
   renderMeals() {
     return (
@@ -46,13 +76,37 @@ const MealsListTitle = styled.h1`
 `;
 
 // Showing latest meals state
-const showingLatestMealsState = Object.create(emptyState);
+const showingLatestMealsState = Object.create(readyToSearchState);
 Object.assign(showingLatestMealsState, {
   renderMeals() {
     return (
       <Fragment>
         <MealsListTitle>Latest meals</MealsListTitle>
         <MealsList meals={this.state.latestMeals} />
+      </Fragment>
+    );
+  }
+});
+
+// Searching meals state
+const searchingMealsState = Object.create(readyToSearchState);
+Object.assign(searchingMealsState, {
+  renderMeals() {
+    return "Searching meals...";
+  }
+});
+
+const showingMealsState = Object.create(readyToSearchState);
+Object.assign(showingMealsState, {
+  renderMeals() {
+    return (
+      <Fragment>
+        <MealsListTitle>
+          {`${this.state.foundMeals.length} results for "${
+            this.state.searchedTerm
+          }".`}
+        </MealsListTitle>
+        <MealsList meals={this.state.foundMeals} />
       </Fragment>
     );
   }
@@ -108,7 +162,7 @@ class SearchPage extends Component {
   }
 
   _renderMeals() {
-    return this.state.state.renderMeals.apply(this);
+    return this.state.state.renderMeals.call(this);
   }
 
   _handleSearchChange(value) {
@@ -116,8 +170,8 @@ class SearchPage extends Component {
   }
 
   _handleSearch() {
-    return this.state.state.handleSearch(this);
+    return this.state.state.handleSearch.call(this);
   }
 }
 
-export default withApi(["fetchLatestMeals"])(SearchPage);
+export default withApi(["fetchLatestMeals", "searchMealsByName"])(SearchPage);
