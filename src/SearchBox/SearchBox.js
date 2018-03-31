@@ -81,6 +81,7 @@ class SearchBox extends Component {
         onBlur={this._handleBlur}
       >
         <SearchInput
+          innerRef={ref => (this._inputRef = ref)}
           className={this.state.focused ? "focus" : ""}
           name="searchInput"
           value={value}
@@ -122,6 +123,10 @@ class SearchBox extends Component {
   _handleSubmit(e) {
     e.preventDefault();
     this.props.onSearch(this.props.value);
+  }
+
+  focus() {
+    this._inputRef.focus();
   }
 }
 
