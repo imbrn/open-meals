@@ -1,23 +1,32 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import TextField from "../TextField";
 import SearchIcon from "./search.svg";
 import styled from "styled-components";
 
+const SearchForm = styled.form`
+  position: relative;
+`;
+
 const SearchInput = TextField.extend`
   width: 100%;
   height: 64px;
-  border-radius: 64px;
   padding: 0 32px;
-  font-size: 28px;
+  border-radius: 64px;
+  outline: none;
+  font-size: 1.5rem;
+  transition: background 0.5s, color 0.5s, border-color 0.5s;
+  &.focus {
+    background: var(--color-white);
+    color: var(--color-black);
+    border-color: var(--color-white);
+  }
 `;
 
 const SearchButton = styled.button`
-  display: none;
   position: absolute;
-  top: 50%;
   right: 32px;
-  transform: translateY(-50%);
+  top: 16px;
   width: 32px;
   height: 32px;
   padding: 0;
@@ -25,50 +34,83 @@ const SearchButton = styled.button`
   color: var(--color-black-alpha-1);
   border: none;
   cursor: pointer;
-  @media (min-width: 512px) {
-    display: block;
-  }
 `;
 
-const SearchForm = styled.form`
-  position: relative;
-`;
-
-const SearchBox = ({ value, placeholder, onChange, onSearch, ...rest }) => {
-  const handleInputChange = e => onChange(e.target.value);
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    onSearch(value);
+class NewSearchBox extends Component {
+  static propTypes = {
+    value: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
+    onChange: PropTypes.func.isRequired,
+    onSearch: PropTypes.func.isRequired
   };
 
-  return (
-    <SearchForm {...rest} role="searchbox" onSubmit={handleSubmit}>
-      <SearchInput
-        name="searchInput"
-        value={value}
-        placeholder={placeholder}
-        arial-label="input"
-        onChange={handleInputChange}
-      />
-      <SearchButton arial-label="button">
-        <SearchIcon height="100%" width="100%" />
-      </SearchButton>
-    </SearchForm>
-  );
-};
+  static defaultProps = {
+    value: "",
+    onChange: () => {},
+    onSearch: () => {}
+  };
 
-SearchBox.propTypes = {
-  value: PropTypes.string.isRequired,
-  placeholder: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
-  onSearch: PropTypes.func.isRequired
-};
+  constructor(props) {
+    super(props);
+    this.state = {
+      focused: false
+    };
+    this._handleInputChange = this._handleInputChange.bind(this);
+    this._handleSubmit = this._handleSubmit.bind(this);
+    this._handleFocus = this._handleFocus.bind(this);
+    this._handleBlur = this._handleBlur.bind(this);
+  }
 
-SearchBox.defaultProps = {
-  value: "",
-  onChange: () => {},
-  onSearch: () => {}
-};
+  render() {
+    const { value, className, placeholder } = this.props;
+    return (
+      <SearchForm
+        className={className}
+        role="searchbox"
+        onSubmit={this._handleSubmit}
+        onFocus={this._handleFocus}
+        onBlur={this._handleBlur}
+      >
+        <SearchInput
+          className={this.state.focused ? "focus" : ""}
+          name="searchInput"
+          value={value}
+          placeholder={placeholder}
+          arial-label="input"
+          onChange={this._handleInputChange}
+        />
+        <SearchButton arial-label="button">
+          <SearchIcon height="100%" width="100%" />
+        </SearchButton>
+      </SearchForm>
+    );
+  }
 
-export default SearchBox;
+  _handleFocus() {
+    this.setState({
+      focused: true
+    });
+  }
+
+  _handleBlur(e) {
+    const currentTarget = e.currentTarget;
+    setTimeout(() => {
+      if (!currentTarget.contains(document.activeElement)) {
+        this.setState({
+          focused: false
+        });
+      }
+    }, 0);
+  }
+
+  _handleInputChange(e) {
+    this.props.onChange(e.target.value);
+  }
+
+  _handleSubmit(e) {
+    e.preventDefault();
+    this.props.onSearch(this.props.value);
+  }
+}
+
+export default NewSearchBox;
