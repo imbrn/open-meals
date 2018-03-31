@@ -4,10 +4,6 @@ import TextField from "../TextField";
 import SearchIcon from "./search.svg";
 import styled from "styled-components";
 
-const SearchForm = styled.form`
-  position: relative;
-`;
-
 const SearchInput = TextField.extend`
   width: 100%;
   height: 64px;
@@ -15,11 +11,17 @@ const SearchInput = TextField.extend`
   border-radius: 64px;
   outline: none;
   font-size: 1.5rem;
-  transition: background 0.5s, color 0.5s, border-color 0.5s;
+  transition: all 0.5s;
+  border-color: var(--color-white-1);
+  &::placeholder {
+    color: var(--color-white);
+    opacity: 0.25;
+  }
   &.focus {
     background: var(--color-white);
-    color: var(--color-black);
-    border-color: var(--color-white);
+    &::placeholder {
+      color: var(--color-black);
+    }
   }
 `;
 
@@ -31,12 +33,19 @@ const SearchButton = styled.button`
   height: 32px;
   padding: 0;
   background: none;
-  color: var(--color-black-alpha-1);
+  color: var(--color-white-1);
   border: none;
   cursor: pointer;
+  &.focus {
+    color: var(--color-black);
+  }
 `;
 
-class NewSearchBox extends Component {
+const SearchForm = styled.form`
+  position: relative;
+`;
+
+class SearchBox extends Component {
   static propTypes = {
     value: PropTypes.string.isRequired,
     placeholder: PropTypes.string,
@@ -72,6 +81,7 @@ class NewSearchBox extends Component {
         onBlur={this._handleBlur}
       >
         <SearchInput
+          innerRef={ref => (this._inputRef = ref)}
           className={this.state.focused ? "focus" : ""}
           name="searchInput"
           value={value}
@@ -79,7 +89,10 @@ class NewSearchBox extends Component {
           arial-label="input"
           onChange={this._handleInputChange}
         />
-        <SearchButton arial-label="button">
+        <SearchButton
+          arial-label="button"
+          className={this.state.focused ? "focus" : ""}
+        >
           <SearchIcon height="100%" width="100%" />
         </SearchButton>
       </SearchForm>
@@ -111,6 +124,10 @@ class NewSearchBox extends Component {
     e.preventDefault();
     this.props.onSearch(this.props.value);
   }
+
+  focus() {
+    this._inputRef.focus();
+  }
 }
 
-export default NewSearchBox;
+export default SearchBox;

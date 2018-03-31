@@ -147,12 +147,16 @@ class SearchPage extends Component {
         state: showingLatestMealsState
       });
     });
+
+    // Focus on the searchBox
+    this.searchBoxRef.focus();
   }
 
   render() {
     return (
       <Page>
         <SearchBoxWrapper
+          innerRef={ref => (this.searchBoxRef = ref)}
           value={this.state.searchTerm}
           onChange={this._handleSearchChange}
           onSearch={this._handleSearch}
