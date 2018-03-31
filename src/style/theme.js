@@ -13,7 +13,7 @@ export const themeConfig = css`
     --color-black-alpha-2: rgba(30, 18, 18, 0.25);
     --color-black-alpha-3: rgba(30, 18, 18, 0.1);
     --color-white: #ffffffff;
-    --color-white-1: rgba(255, 255, 255, 0.5);
+    --color-white-1: rgba(255, 255, 255, 0.75);
     --font-sans-serif: "Roboto Condensed", sans-serif;
     --font-cursive: "Lobster", cursive;
   }
