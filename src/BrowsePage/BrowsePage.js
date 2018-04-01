@@ -103,7 +103,7 @@ const LoadingMessage = styled.h2`
 
 const BadgeList = styled.div`
   display: flex;
-  width: 680px;
+  max-width: 680px;
   margin: 0 auto;
   flex-wrap: wrap;
   justify-content: center;
