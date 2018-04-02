@@ -80,7 +80,10 @@ class BrowsePage extends Component {
 }
 
 const Content = styled.section`
-  margin-top: 64px;
+  margin-top: 8px;
+  @media (min-width: 960px) {
+    margin-top: 64px;
+  }
 `;
 
 const Section = styled.section`
