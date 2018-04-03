@@ -10,6 +10,23 @@ export function fetchLatestMeals() {
   return fetchMeals("https://www.themealdb.com/api/json/v1/1/latest.php");
 }
 
+export function fetchMealById(id) {
+  return fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
+    .then(resp => resp.json())
+    .then(json => json.meals)
+    .then(meals => meals[0]);
+}
+
+export function fetchMealsByCategory(category) {
+  return fetch(
+    `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`
+  )
+    .then(resp => resp.json())
+    .then(json => json.meals || [])
+    .then(meals => Promise.all(meals.map(meal => fetchMealById(meal.idMeal))))
+    .then(meals => meals.map(normalizeMeal));
+}
+
 export function listCategories() {
   return fetch("https://www.themealdb.com/api/json/v1/1/list.php?c=list")
     .then(resp => resp.json())
