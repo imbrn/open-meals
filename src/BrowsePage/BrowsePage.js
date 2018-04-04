@@ -42,7 +42,7 @@ class BrowsePage extends Component {
       "By category",
       this.state.categories,
       item => item.strCategory,
-      item => `${item}`
+      item => `/browse/category/${item.strCategory}`
     );
   }
 
