@@ -1,4 +1,7 @@
 # :curry: open-meals
+
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://opensource.org/licenses/MIT)
+
 Catalog of meals for you to search and browse your next meal
 
 ## Credits
