@@ -1,6 +1,7 @@
 import SearchPage from "./SearchPage";
 import BrowsePage from "./BrowsePage";
 import BrowseCategory from "./BrowseCategory";
+import BrowseArea from "./BrowseArea";
 import PageNotFound from "./PageNotFound";
 
 const routes = [
@@ -24,6 +25,13 @@ const routes = [
     path: "/browse/category/:category",
     exact: true,
     component: BrowseCategory
+  },
+  {
+    id: "browse-area",
+    name: "Browse Area",
+    path: "/browse/area/:area",
+    exact: true,
+    component: BrowseArea
   },
   { id: "404", component: PageNotFound }
 ];

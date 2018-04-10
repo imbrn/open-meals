@@ -27,6 +27,14 @@ export function fetchMealsByCategory(category) {
     .then(meals => meals.map(normalizeMeal));
 }
 
+export function fetchMealsByArea(area) {
+  return fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=${area}`)
+    .then(resp => resp.json())
+    .then(json => json.meals || [])
+    .then(meals => Promise.all(meals.map(meal => fetchMealById(meal.idMeal))))
+    .then(meals => meals.map(normalizeMeal));
+}
+
 export function listCategories() {
   return fetch("https://www.themealdb.com/api/json/v1/1/list.php?c=list")
     .then(resp => resp.json())
