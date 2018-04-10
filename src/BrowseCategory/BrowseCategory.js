@@ -6,15 +6,25 @@ import styled from "styled-components";
 
 class BrowseCategory extends Component {
   state = {
-    meals: null
+    loading: true,
+    meals: [],
+    category: null
   };
 
   componentDidMount() {
-    const { fetchMealsByCategory, match } = this.props;
-    const category = match.params["category"];
+    const {
+      match: { params: { category } },
+      fetchMealsByCategory
+    } = this.props;
+
+    this.setState({
+      category,
+      loading: true
+    });
 
     fetchMealsByCategory(category).then(meals => {
       this.setState({
+        loading: false,
         meals
       });
     });
@@ -23,13 +33,13 @@ class BrowseCategory extends Component {
   render() {
     return (
       <Page>
-        {this.state.meals ? (
+        {this.state.loading ? (
+          <LoadingContainer>Loading meals...</LoadingContainer>
+        ) : (
           <Root>
-            <Title>{this.props.match.params.category}</Title>
+            <Title>{this.state.category}</Title>
             <MealsList meals={this.state.meals} />
           </Root>
-        ) : (
-          <span>Loading meals</span>
         )}
       </Page>
     );
@@ -48,6 +58,17 @@ const Title = styled.h1`
   color: var(--color-white);
   font-size: 2.5rem;
   font-family: var(--font-cursive);
+`;
+
+const LoadingContainer = styled.div`
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-family: var(--font-cursive);
+  color: var(--color-white);
 `;
 
 export default withApi(["fetchMealsByCategory"])(BrowseCategory);
