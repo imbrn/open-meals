@@ -51,7 +51,7 @@ class BrowsePage extends Component {
       "By area",
       this.state.areas,
       item => item.strArea,
-      item => `${item}`
+      item => `/browse/area/${item.strArea}`
     );
   }
 
