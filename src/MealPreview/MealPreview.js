@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../Button";
 import imageLoader from "../imageLoader";
@@ -115,8 +116,10 @@ const MealType = styled.h1`
   margin-top: 8px;
 `;
 
-const MoreButton = Button.extend`
+const MoreButton = Button.withComponent(Link).extend`
   height: 32px;
+  line-height: 32px;
+  text-decoration: none;
   border-radius: 32px;
   padding: 0 16px;
   margin-top: 16px;
@@ -130,7 +133,7 @@ const Meal = ({ meal }) => (
       <MealType>
         {meal.area} {meal.category}
       </MealType>
-      <MoreButton>More</MoreButton>
+      <MoreButton to={`/meal/${meal.id}`}>More</MoreButton>
     </MealInfo>
   </MealRoot>
 );

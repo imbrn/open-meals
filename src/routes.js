@@ -2,6 +2,7 @@ import SearchPage from "./SearchPage";
 import BrowsePage from "./BrowsePage";
 import BrowseCategory from "./BrowseCategory";
 import BrowseArea from "./BrowseArea";
+import MealPage from "./MealPage";
 import PageNotFound from "./PageNotFound";
 
 const routes = [
@@ -32,6 +33,13 @@ const routes = [
     path: "/browse/area/:area",
     exact: true,
     component: BrowseArea
+  },
+  {
+    id: "meal-page",
+    name: "Meal page",
+    path: "/meal/:mealId",
+    exact: true,
+    component: MealPage
   },
   { id: "404", component: PageNotFound }
 ];
