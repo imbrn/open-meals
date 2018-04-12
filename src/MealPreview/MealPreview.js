@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../Button";
 import imageLoader from "../imageLoader";
+import Spinner from "./oval.svg";
 
 class MealPreview extends Component {
   constructor(props) {
@@ -35,7 +36,12 @@ class MealPreview extends Component {
     return (
       <CardContainer className={this.state.state}>
         <Card>
-          <Cover>Open Meals</Cover>
+          <Cover>
+            <CoverTitle>Open Meals</CoverTitle>
+            <CoverLoading>
+              <Spinner />
+            </CoverLoading>
+          </Cover>
           <Content>
             <Meal meal={this.props.meal} />
           </Content>
@@ -61,10 +67,19 @@ const Cover = styled.div`
   background: var(--color-black-alpha-3);
   color: var(--color-black-alpha-2);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+`;
+
+const CoverTitle = styled.h1`
   font-family: var(--font-cursive);
   font-size: 1.5rem;
+`;
+
+const CoverLoading = styled.div`
+  color: var(--color-black-alpha-2);
+  margin-top: 12px;
 `;
 
 const Content = styled.div`
