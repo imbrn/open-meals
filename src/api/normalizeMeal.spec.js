@@ -32,7 +32,7 @@ describe("normalizeMeal", () => {
     expect(normalizedMeal.area).toEqual(rawMeal.strArea);
     expect(normalizedMeal.ingredients).toEqual(
       ingredients.map((ingredient, i) => ({
-        ingredient,
+        name: ingredient,
         measure: measures[i]
       }))
     );
