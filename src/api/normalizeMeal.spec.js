@@ -52,7 +52,7 @@ function mockIngredients(receiver, quantity) {
       ingredient = `Ingredient ${j}`;
       ingredients.push(ingredient);
     }
-    receiver[`ingredient${j}`] = ingredient;
+    receiver[`strIngredient${j}`] = ingredient;
   }
   return ingredients;
 }

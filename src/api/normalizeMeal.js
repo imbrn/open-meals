@@ -17,7 +17,7 @@ function normalizeIngredients(rawMeal) {
   let i = 1;
   let searching = true;
   while (searching) {
-    const key = `ingredient${i}`;
+    const key = `strIngredient${i}`;
     if (rawMeal.hasOwnProperty(key) && rawMeal[key]) {
       ingredients.push({
         ingredient: rawMeal[key],
