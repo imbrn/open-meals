@@ -66,7 +66,7 @@ function mockMeasures(receiver, quantity) {
       measure = `Measure ${j}`;
       measures.push(measure);
     }
-    receiver[`measure${j}`] = measure;
+    receiver[`strMeasure${j}`] = measure;
   }
   return measures;
 }
