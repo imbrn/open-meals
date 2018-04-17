@@ -32,7 +32,7 @@ describe("normalizeMeal", () => {
     expect(normalizedMeal.area).toEqual(rawMeal.strArea);
     expect(normalizedMeal.ingredients).toEqual(
       ingredients.map((ingredient, i) => ({
-        ingredient,
+        name: ingredient,
         measure: measures[i]
       }))
     );
@@ -52,7 +52,7 @@ function mockIngredients(receiver, quantity) {
       ingredient = `Ingredient ${j}`;
       ingredients.push(ingredient);
     }
-    receiver[`ingredient${j}`] = ingredient;
+    receiver[`strIngredient${j}`] = ingredient;
   }
   return ingredients;
 }
@@ -66,7 +66,7 @@ function mockMeasures(receiver, quantity) {
       measure = `Measure ${j}`;
       measures.push(measure);
     }
-    receiver[`measure${j}`] = measure;
+    receiver[`strMeasure${j}`] = measure;
   }
   return measures;
 }
