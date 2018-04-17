@@ -1,4 +1,5 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import * as api from "./api";
 
 const withApi = apiFunctions => {
@@ -8,7 +9,7 @@ const withApi = apiFunctions => {
       apiFunctions.forEach(fn => {
         functions[fn] = api[fn];
       });
-      const C = component;
+      const C = withRouter(component);
       return (
         <C {...rest} {...functions}>
           {children}

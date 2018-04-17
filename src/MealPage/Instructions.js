@@ -31,6 +31,9 @@ const Instruction = styled.li`
     margin-right: 8px;
     color: var(--color-black-alpha-2);
   }
+  &:last-child {
+    margin-bottom: 0;
+  }
 `;
 
 export default Instructions;
