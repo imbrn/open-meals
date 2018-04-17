@@ -14,8 +14,10 @@ export const themeConfig = css`
     --color-black-alpha-3: rgba(30, 18, 18, 0.1);
     --color-white: #ffffffff;
     --color-white-1: rgba(255, 255, 255, 0.75);
+    --color-white-alpha-2: rgba(255, 255, 255, 0.25);
     --font-sans-serif: "Roboto Condensed", sans-serif;
     --font-cursive: "Lobster", cursive;
+    --box-shadow-medium: 4px 4px 8px rgba(0, 0, 0, 0.2);
   }
 `;
 
