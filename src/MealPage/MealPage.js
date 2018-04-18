@@ -6,19 +6,23 @@ import imageLoader from "../imageLoader";
 import Tabs from "./Tabs";
 import Ingredients from "./Ingredients";
 import Instructions from "./Instructions";
+import MealsList from "../MealsList";
 
 class MealPage extends Component {
   state = {
     loading: true,
-    meal: null
+    meal: null,
+    loadingRelatedMeals: true,
+    relatedMeals: null
   };
 
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
-    const { match: { params: { mealId } }, fetchMealById } = this.props;
+    const {
+      match: {
+        params: { mealId }
+      },
+      fetchMealById
+    } = this.props;
 
     // Start with loading progress
     this.setState({
@@ -42,6 +46,25 @@ class MealPage extends Component {
       this.setState({
         loading: false
       });
+
+      // Load related meals
+      this._loadRelatedMeals();
+    });
+  }
+
+  _loadRelatedMeals() {
+    const { fetchMealsByCategory } = this.props;
+    const { meal } = this.state;
+
+    fetchMealsByCategory({
+      category: meal.category,
+      amount: 4,
+      reject: meal.id
+    }).then(relatedMeals => {
+      this.setState({
+        loadingRelatedMeals: false,
+        relatedMeals
+      });
     });
   }
 
@@ -60,16 +83,24 @@ class MealPage extends Component {
   _renderMeal() {
     const { meal } = this.state;
     return (
-      <MealContainer>
-        <Title>{meal.name}</Title>
-        <Type>
-          {meal.area} {meal.category}
-        </Type>
-        <MealBox meal={this.state.meal} />
-      </MealContainer>
+      <Root>
+        <MealContainer>
+          <Title>{meal.name}</Title>
+          <Type>
+            {meal.area} {meal.category}
+          </Type>
+          <MealBox meal={this.state.meal} />
+        </MealContainer>
+        <RelatedMeals
+          loading={this.state.loadingRelatedMeals}
+          meals={this.state.relatedMeals}
+        />
+      </Root>
     );
   }
 }
+
+const Root = styled.div``;
 
 const MealContainer = styled.section`
   margin-top: 48px;
@@ -142,4 +173,33 @@ const MealDetails = styled.section`
   flex-grow: 1;
 `;
 
-export default withApi(["fetchMealById"])(MealPage);
+const RelatedMeals = ({ loading, meals }) => {
+  return (
+    <RelatedMealsRoot>
+      <RelatedMealsTitle>Related meals</RelatedMealsTitle>
+      {loading ? (
+        <RelatedMealsLoading>Loading...</RelatedMealsLoading>
+      ) : (
+        <MealsList meals={meals} />
+      )}
+    </RelatedMealsRoot>
+  );
+};
+
+const RelatedMealsRoot = styled.section`
+  margin-top: 64px;
+`;
+
+const RelatedMealsTitle = styled.h1`
+  margin-bottom: 16px;
+  color: var(--color-white);
+  font-family: var(--font-cursive);
+  font-size: 2rem;
+`;
+
+const RelatedMealsLoading = styled.div`
+  color: var(--color-white);
+  font-size: 1.15rem;
+`;
+
+export default withApi(["fetchMealById", "fetchMealsByCategory"])(MealPage);

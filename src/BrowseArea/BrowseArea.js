@@ -12,7 +12,8 @@ class BrowseArea extends Component {
   };
 
   componentDidMount() {
-    const { match: { params: { area } }, fetchMealsByArea } = this.props;
+    const area = this.props.match.params.area;
+    const fetchMealsByArea = this.props.fetchMealsByArea;
 
     this.setState({
       area,

@@ -18,12 +18,14 @@ export function fetchMealById(id) {
     .then(normalizeMeal);
 }
 
-export function fetchMealsByCategory(category) {
+export function fetchMealsByCategory({ category, amount, reject }) {
   return fetch(
     `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`
   )
     .then(resp => resp.json())
     .then(json => json.meals || [])
+    .then(meals => meals.filter(meal => meal.idMeal !== reject))
+    .then(meals => meals.slice(0, amount || meals.length))
     .then(meals => Promise.all(meals.map(meal => fetchMealById(meal.idMeal))));
 }
 
