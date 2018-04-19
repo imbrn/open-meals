@@ -15,14 +15,12 @@ const Ingredients = ({ ingredients }) => {
 
 const Root = styled.div`
   display: flex;
-  padding-left: 24px;
   justify-content: center;
 `;
 
 const InnerContent = styled.div`
-  display: inline-block;
-  min-width: 300px;
   color: var(--color-white);
+  width: 100%;
 `;
 
 const Ingredient = ({ ingredient }) => {
@@ -44,7 +42,7 @@ const IngredientMeasure = styled.div`
   text-align: right;
   flex-basis: 0;
   flex-grow: 1;
-  margin-right: 24px;
+  margin-right: 32px;
   font-weight: 700;
 `;
 

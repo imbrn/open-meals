@@ -153,14 +153,24 @@ const MealBox = ({ meal }) => {
 const MealRoot = styled.section`
   padding: 24px;
   display: flex;
+  flex-direction: column;
   margin-top: 24px;
   background: var(--color-black-alpha-2);
+
+  @media (min-width: 576px) {
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
 `;
 
 const MealThumbWrapper = styled.div`
-  padding: 24px;
   flex-basis: 0;
   flex-grow: 1;
+  margin: 24px 0 0 0;
+
+  @media (min-width: 576px) {
+    margin: 0 0 0 24px;
+  }
 `;
 
 const MealThumb = styled.img`
