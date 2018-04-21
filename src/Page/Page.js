@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Container from "../Container";
 import Navigation from "./Navigation";
+import Footer from "./Footer";
 
 const Root = styled.div`
   display: flex;
@@ -27,6 +28,7 @@ const Page = ({ children, ...rest }) => (
         ]}
       />
       {children}
+      <Footer />
     </Content>
   </Root>
 );
