@@ -13,7 +13,9 @@ class BrowseCategory extends Component {
 
   componentDidMount() {
     const {
-      match: { params: { category } },
+      match: {
+        params: { category }
+      },
       fetchMealsByCategory
     } = this.props;
 
@@ -22,7 +24,7 @@ class BrowseCategory extends Component {
       loading: true
     });
 
-    fetchMealsByCategory(category).then(meals => {
+    fetchMealsByCategory({ category }).then(meals => {
       this.setState({
         loading: false,
         meals
