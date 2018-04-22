@@ -1,5 +1,6 @@
 # :curry: open-meals
 
+[![CircleCI](https://circleci.com/gh/bruno02221/open-meals.svg?style=svg)](https://circleci.com/gh/bruno02221/open-meals)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://opensource.org/licenses/MIT)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
