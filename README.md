@@ -4,6 +4,8 @@
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://opensource.org/licenses/MIT)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
+[![Demo](./docs/demo.gif)]()
+
 Catalog of meals for you to search and browse your next meal
 
 ## Credits
