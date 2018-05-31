@@ -10,13 +10,15 @@ Catalog of meals for you to search and browse your next meal
 
 ## How to contribute
 
-### Get project
+### Getting the project
 
-### Developing
+To contribute to this project, first you need to get it. To do so, perform the following commands:
 
-### Building
-
-### Deploying
+```sh
+git clone https://github.com/bruno02221/open-meals.git
+cd open-meals
+npm install
+```
 
 ## Credits
 
