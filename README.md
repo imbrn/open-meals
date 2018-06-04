@@ -19,6 +19,13 @@ git clone https://github.com/bruno02221/open-meals.git
 cd open-meals
 npm install
 ```
+### Running local server
+
+To start a local development server with hot-reload capability, run:
+
+```sh
+npm run dev
+```
 
 ## Credits
 
