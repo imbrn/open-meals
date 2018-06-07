@@ -27,6 +27,8 @@ To start a local development server with hot-reload capability, run:
 npm run dev
 ```
 
+This will run a local server with hot-reload capabilities.
+
 ## Credits
 
 This application is able to exist thanks to [themealdb.com api](https://www.themealdb.com/api.php).
