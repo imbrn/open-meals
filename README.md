@@ -29,6 +29,20 @@ npm run dev
 
 This will run a local server with hot-reload capabilities.
 
+### Running unit tests
+
+* To run tests:
+
+```sh
+npm run test
+```
+
+* To watch tests:
+
+```sh
+npm run test:watch
+```
+
 ## Credits
 
 This application is able to exist thanks to [themealdb.com api](https://www.themealdb.com/api.php).
