@@ -43,6 +43,16 @@ npm run test
 npm run test:watch
 ```
 
+### Building
+
+To build the production ready product, run:
+
+```sh
+npm build
+```
+
+This command will generate the production ready bundled files in the `dist` folder.
+
 ## Credits
 
 This application is able to exist thanks to [themealdb.com api](https://www.themealdb.com/api.php).
